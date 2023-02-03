@@ -116,4 +116,24 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
+    def cycle_condition(n, fn):
+        if n == 0:
+            return fn
+        if n == 1:
+            return lambda x: f1(fn(x))  
+        if n == 2:
+            return lambda x: f2(fn(x))
+        if n == 3:
+            return lambda x:  f3(fn(x))
+
+    def fn_cycle(n):
+        count = 0
+        fn = lambda x:x
+        while count <= n:
+            fn = cycle_condition(count, fn)
+            count += 1
+            if count > 3:
+                count -= 3
+                n -= 3
+        return fn
+    return fn_cycle
